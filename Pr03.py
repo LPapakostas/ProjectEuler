@@ -1,5 +1,7 @@
 import math
+import time
 
+start_time = time.time()
 N = 600851475143
 p = 2
 while (N >= p*p):
@@ -8,4 +10,5 @@ while (N >= p*p):
     else:
         p+=1
 print(N)
+print(time.time() - start_time,"seconds")
     
