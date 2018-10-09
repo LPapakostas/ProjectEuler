@@ -1,4 +1,4 @@
-f = open("Pr8_numbers.txt","r")
+f = open("Pr08_numbers.txt","r")
 data = list(f.read())
 while('\n' in data):
     data.remove('\n')
