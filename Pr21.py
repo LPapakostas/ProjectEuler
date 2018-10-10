@@ -1,20 +1,17 @@
-from fractions import gcd
 import math
 
-def amiable(k):
-	s=1
-	for i in range(2,int(math.sqrt(k))):
-		temp = gcd(k,i)
-		if (temp!=1):
-			s+=temp
-	return s
-	
+def sum_of_gcd(x):
+  s=1
+  for i in range(2,int(math.sqrt(x))+1):
+    if ((x%i) == 0):
+      s+=x/i + i
+  return int(s)
 
 N = 10000
 lst = []
 for a in range(2,N+1):
-	b = amiable(a)
-	if( a==amiable(b) and (a!=b) and (a not in lst) and (b not in lst)):
+	b = sum_of_gcd(a)
+	if( a==sum_of_gcd(b) and (a!=b) and (a not in lst)):
 		lst.append(a)
 		lst.append(b)
 print(sum(lst))
