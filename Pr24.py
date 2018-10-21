@@ -1,3 +1,8 @@
+'''
+We use Lehmer code to solve this problem
+http://math.shaunlgs.com/lehmer-code/
+'''
+
 def factorial(n):
     if n < 2:
         return 1
