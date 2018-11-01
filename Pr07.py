@@ -1,24 +1,20 @@
-import math
+import math , time
 
 def isprime(num):
-    s = 1
-    j = 2
-    while(j<=math.ceil(math.sqrt(num))):
+    s = 1 ; j = 2
+    while(j<=round(math.sqrt(num))):
         if( num%j == 0):
             s = 0
             break
-        else:
-            s = 1
         j+=1
     return s
 
-N = 10001
-nofprime = 1
-i = 2
-while(1):
+start_time = time.time()
+N = 10001 ; nofprime = 1 ; i = 2
+while(True):
     i+=1
-    if(isprime(i)):
+    if isprime(i) :
         nofprime+=1
     if(nofprime == N):
-        print(i)
         break
+print(i,time.time() - start_time,"seconds")
