@@ -1,16 +1,17 @@
-import math
+import time
 
-def isprime(num):
-    s = 1
-    j = 2
-    while(j<=math.ceil(math.sqrt(num))):
-        if( num%j == 0):
-            s = 0
-            break
-        else:
-            s = 1
-        j+=1
-    return s
+def siege_of_eratosthenes(N):
+    prime = [True]*(N+1)
+    p = 2
+    while(p*p < N+1):
+        if(prime[p] == True):
+            for i in range(2*p,N+1,p):
+                prime[i] = False
+        p+=1
+    prime[0] , prime[1] = False,False
+    return prime
 
-ans = sum(x for x in range(3,2000000,2) if( isprime(x)==1 ) ) 
-print(ans+2)
+start = time.time() ; N = 2*10**6
+primes = siege_of_eratosthenes(N)
+print(sum([x for x in range(len(primes)) if primes[x]]))
+print(time.time() - start,"seconds")
