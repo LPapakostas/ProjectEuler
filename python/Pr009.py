@@ -1,13 +1,18 @@
 import time
-def pythagorian_tri(N):
-    for c in range(1,N):
-       for b in range(1,c):
-           for a in range(1,b):
-                if (a+b+c == N) and (c*c == a*a+b*b):
-                    return a*b*c
-    return 0
+SUM = 1000
 
-start = time.time() ; N = 1000 
-print(pythagorian_tri(N),time.time()-start,"seconds")
+def pythagorian_tri(N):
+# Only need 2 loops in order to find a triplet
+# because <a> side can be obtained by N = a + b +c
+	for c in range(1,N):
+	# With this loop, it is assured that always c > b
+		for b in range(1,c):
+			a = N-(c+b) 					
+			if (c*c == a*a+b*b):
+				return a*b*c
+
+start = time.time() 
+print(pythagorian_tri(SUM))
+print("Time Evaluated :", time.time()-start,"seconds")
 
     
