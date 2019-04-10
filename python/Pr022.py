@@ -1,5 +1,5 @@
 import string
-f = open("Pr22_names.txt","r")
+f = open("Pr022_names.txt","r")
 names = []
 for x in f:
  	names = x.split(',')

@@ -4,7 +4,7 @@ def triag(data):
 			data[i][j]+=max(data[i+1][j],data[i+1][j+1])
 	return data[0][0]
 
-f = open("Pr18_numbers.txt","r")
+f = open("Pr018_numbers.txt","r")
 data = [[int(x) for x in line.split()] for line in f]
 print(triag(data))
 

@@ -1,7 +1,7 @@
 import time
 
 start = time.time()
-f = open("Pr8_numbers.txt","r")
+f = open("Pr008_numbers.txt","r")
 data = list(f.read())
 while('\n' in data):
     data.remove('\n')

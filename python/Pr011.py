@@ -6,7 +6,7 @@ def product(x,y,dx,dy,n,a):
     pr*=a[x+i*dx,y+i*dy]
   return pr
 
-a = np.loadtxt("Pr11_numbers.txt",dtype = int)
+a = np.loadtxt("Pr011_numbers.txt",dtype = int)
 n,p = a.shape
 ans = -1
 N = 4
