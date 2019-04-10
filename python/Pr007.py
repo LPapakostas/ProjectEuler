@@ -1,20 +1,24 @@
-import math , time
+import time
+N = 10001
 
-def isprime(num):
-    s = 1 ; j = 2
-    while(j<=round(math.sqrt(num))):
-        if( num%j == 0):
-            s = 0
-            break
-        j+=1
-    return s
+# This function returns True if x is a prime number
+def is_prime(x):
+	if (x == 2):
+		return True
+	if (x<2) or (x%2 == 0) :
+		return False
+	for i in range(3,int(x**(0.5))+1,2):
+		if (x%i == 0):
+			return False
+	return True
 
-start_time = time.time()
-N = 10001 ; nofprime = 1 ; i = 2
-while(True):
-    i+=1
-    if isprime(i) :
-        nofprime+=1
-    if(nofprime == N):
-        break
-print(i,time.time() - start_time,"seconds")
+
+start = time.time()
+# We start from 3 in order to increase our step by 2 
+n_of_prime = 2 ; num = 3
+while (n_of_prime < N):
+	num+=2
+	if is_prime(num):
+		n_of_prime +=1
+	
+print(num) ; print("Time Evaluated :", time.time() - start, "seconds")
