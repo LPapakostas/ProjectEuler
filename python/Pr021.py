@@ -1,17 +1,23 @@
-import math
+import time
+N = 10000
 
 def sum_of_gcd(x):
-  s=1
-  for i in range(2,int(math.sqrt(x))+1):
+  s=1 # every number has 1 as a divisor
+  # find divisors till sqrt of <x> because 
+  # if one divisor is i, the other is x/i
+  for i in range(2,int(x**0.5)+1):
     if ((x%i) == 0):
-      s+=x/i + i
-  return int(s)
+      s+=int(x/i) + i
+  return s
 
-N = 10000
-lst = []
+
+start = time.time() ; amiable = []
+# for amiable numbers, the number itselfs is not 
+# included
 for a in range(2,N+1):
 	b = sum_of_gcd(a)
-	if( a==sum_of_gcd(b) and (a!=b) and (a not in lst)):
-		lst.append(a)
-		lst.append(b)
-print(sum(lst))
+	if( a==sum_of_gcd(b) and (a!=b) and (a not in amiable)):
+		amiable.append(a)
+		amiable.append(b)
+print(sum(amiable))
+print("Time Evaluated :",time.time()-start," seconds")
