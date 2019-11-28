@@ -30,7 +30,6 @@ def check(i):
     return True
 
 start = time.time() ; count = 100000 ; flag = False
-x1 = 125874 ; x2 = 251748
 while(count < LIMIT):
     flag = check(count)
     if flag :
