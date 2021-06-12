@@ -1,14 +1,46 @@
+from Pr001 import ANS1
 import time
-def maximum(p,m):
-    if p > m:
-        return p
-    return m
+from helper_functions import timer, maximum
 
-start = time.time()
-max_pali = 1 ; start_val = 100 ; stop_val = 1000
-for i in range(start_val,stop_val):
-    for j in range(start_val,stop_val):
-        if (str(i*j) == str(i*j)[::-1]):
-            max_pali = maximum(i*j,max_pali)
+@timer 
+def largest_palindrome_product(digits: int) -> int:
+    """Computes the largest product between n-digit numbers
+    that is palindrome.
+    
+    Notes
+    -----
+    A palindromic number is a number that remains the same 
+    when its digits are reversed.
+    
+    Parameters
+    ----------
+    `digits` : int
+        Number of digits.
+        
+    Returns
+    -------
+    `l_pali` : int
+        Largest palindrome product.
+    """
+    start = 10 ** (digits-1)
+    end = 10 ** digits
+    l_pali = 0
+    
+    for n1 in range(start, end):
+        for n2 in range(start, end):
+            product = n1*n2
+            is_palindrome = (str(product) == str(product)[::-1])
+            if is_palindrome:
+                l_pali = maximum(product,l_pali)
+    
+    return l_pali
 
-print(max_pali,time.time()-start,"seconds")
+N1, ANS1 = 2, 9009
+N2, ANS2 = 3, 906609
+
+if (__name__ == "__main__"):
+    # just for testing
+    assert(largest_palindrome_product(N1) == ANS1) 
+    ans = largest_palindrome_product(N2)
+    print(f"Problem 4 answer is {ans}")
+    assert(ans == ANS2) 
