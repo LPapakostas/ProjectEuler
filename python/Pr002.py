@@ -1,12 +1,35 @@
-import math,time
-start_time = time.time()
+from helper_functions import timer
 
-(f0,f1) = (1,1)
-ans = 0 ; N = 4*10**6
-while (f1 < N):
-    # Find the sum of even fibonacci terms
-    if ( f1%2 == 0):
-        ans+=f1
-    (f0,f1) = (f1,f1+f0)    
-print(ans)
-print(time.time() - start_time,"seconds")
+@timer
+def find_even_fibonacci_terms_sum(N: int) -> int:
+    """Compute the summary of even-valued Fibonacci 
+    terms, for a given upper limit
+    
+    Parameters
+    ----------
+    `N` : int
+        Upper limit of computation
+        
+    Returns
+    -------
+    `sum` : int
+        Computed summary value
+    """
+    f0, f1 = 1, 1 # Starting Fibonacci values
+    sum = 0 
+    while (f1 < N):
+        is_even = (f1%2 == 0)
+        if is_even:
+            sum += f1
+        f0, f1 = f1, f1 + f0
+    return sum
+
+N1, ANS1 = 100, 44
+N2, ANS2 = 4000000, 4613732
+
+if (__name__ == '__main__'):
+    assert(find_even_fibonacci_terms_sum(N1)
+           == ANS1) # Just for testing
+    ans = find_even_fibonacci_terms_sum(N2)
+    assert(ans == ANS2)
+    print(f"Problem 2 answer is {ans}")
