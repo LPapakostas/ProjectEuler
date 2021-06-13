@@ -1,17 +1,25 @@
+from Pr008 import ANS1
 import time
+from helper_functions import timer, sieve_of_eratosthenes
 
-def siege_of_eratosthenes(N):
-    prime = [True]*(N+1)
-    p = 2
-    while(p*p < N+1):
-        if(prime[p] == True):
-            for i in range(2*p,N+1,p):
-                prime[i] = False
-        p+=1
-    prime[0] , prime[1] = False,False
-    return prime
+@timer
+def prime_summation(N: int) -> int:
+    """Helper function that returns the summation of
+    all prime number up to input value.
+    
+    Note
+    ----
+    Uses `sieve_of_eratosthenes` method.
+    """
+    primes = sieve_of_eratosthenes(N)
+    summary = sum(primes)
+    return summary
 
-start = time.time() ; N = 2*10**6
-primes = siege_of_eratosthenes(N)
-print(sum([x for x in range(len(primes)) if primes[x]]))
-print(time.time() - start,"seconds")
+if (__name__ == "__main__"):
+    N1, ANS1 = 10, 17
+    N2, ANS2 = 2000000, 142913828922
+    
+    assert(prime_summation(N1) == ANS1)
+    ans = prime_summation(N2)
+    print(f"Problem 10 answer is {ans}")
+    assert(ans == ANS2)
