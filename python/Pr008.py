@@ -1,6 +1,4 @@
 from os import read
-import time
-from Pr004 import ANS2
 from helper_functions import timer
 from typing import Iterable
 
