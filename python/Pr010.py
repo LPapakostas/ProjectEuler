@@ -1,4 +1,3 @@
-from Pr008 import ANS1
 import time
 from helper_functions import timer, sieve_of_eratosthenes
 

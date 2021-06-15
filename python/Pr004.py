@@ -1,5 +1,3 @@
-from Pr001 import ANS1
-import time
 from helper_functions import timer, maximum
 
 @timer 
@@ -35,10 +33,10 @@ def largest_palindrome_product(digits: int) -> int:
     
     return l_pali
 
-N1, ANS1 = 2, 9009
-N2, ANS2 = 3, 906609
-
 if (__name__ == "__main__"):
+    N1, ANS1 = 2, 9009
+    N2, ANS2 = 3, 906609
+
     # just for testing
     assert(largest_palindrome_product(N1) == ANS1) 
     ans = largest_palindrome_product(N2)

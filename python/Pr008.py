@@ -1,8 +1,7 @@
 from os import read
 from helper_functions import timer
-from typing import Iterable
 
-def read_file(path: str) -> Iterable:
+def read_file(path: str) -> list:
     """Helper function that returns data 
     from file.
     """
@@ -15,7 +14,7 @@ def read_file(path: str) -> Iterable:
     return data
 
 @timer
-def find_largest_series_product(N: int, data: Iterable) -> int:
+def find_largest_series_product(N: int, data: list) -> int:
     """Find the largest product of adjucent one digit
     numbers.
     
@@ -24,7 +23,7 @@ def find_largest_series_product(N: int, data: Iterable) -> int:
     N : `int`
         Adjucent numbers length.
         
-    data : `Iterable`
+    data : `list`
         Data that need to be processed. 
         
     Returns
@@ -45,10 +44,10 @@ def find_largest_series_product(N: int, data: Iterable) -> int:
     max_value = max(adj_values)
     return max_value
     
-N1, ANS1 = 4, 5832
-N2, ANS2 = 13, 23514624000
-
 if (__name__ == "__main__"):
+    N1, ANS1 = 4, 5832
+    N2, ANS2 = 13, 23514624000
+    
     fname = "Pr008_numbers.txt"
     data_pr8 = read_file(fname)
     

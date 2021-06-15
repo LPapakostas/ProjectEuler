@@ -1,4 +1,3 @@
-from Pr003 import ANS2
 import math
 from helper_functions import timer
 
@@ -24,10 +23,10 @@ def sum_square_diff(N: int) -> int:
     res = int(math.fabs(square_of_sum - sum_of_squares))
     return res
 
-N1, ANS1 = 10, 2640
-N2, ANS2 = 100, 25164150
-
 if (__name__ == "__main__"):
+    N1, ANS1 = 10, 2640
+    N2, ANS2 = 100, 25164150
+
     assert(sum_square_diff(N1) == ANS1) # for testing
     ans = sum_square_diff(N2)
     print(f"Problem 6 answer is {ans}")

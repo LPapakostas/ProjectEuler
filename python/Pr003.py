@@ -1,4 +1,3 @@
-from Pr002 import ANS1
 from helper_functions import timer
 
 @timer
@@ -35,10 +34,10 @@ def compute_max_prime_factor(N: int) -> int:
     l_factor = int(N)
     return l_factor
 
-N1, ANS1 = 13195, 29
-N2, ANS2 = 600851475143, 6857
-
 if (__name__ == "__main__"):
+    N1, ANS1 = 13195, 29
+    N2, ANS2 = 600851475143, 6857
+
     assert(compute_max_prime_factor(N1) == ANS1) # for testing only
     ans = compute_max_prime_factor(N2)
     print(f"Problem 3 answer is {ans}")

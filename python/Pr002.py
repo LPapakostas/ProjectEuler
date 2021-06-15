@@ -24,10 +24,10 @@ def find_even_fibonacci_terms_sum(N: int) -> int:
         f0, f1 = f1, f1 + f0
     return sum
 
-N1, ANS1 = 100, 44
-N2, ANS2 = 4000000, 4613732
-
 if (__name__ == '__main__'):
+    N1, ANS1 = 100, 44
+    N2, ANS2 = 4000000, 4613732
+    
     assert(find_even_fibonacci_terms_sum(N1)
            == ANS1) # Just for testing
     ans = find_even_fibonacci_terms_sum(N2)
