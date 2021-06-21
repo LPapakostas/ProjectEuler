@@ -1,4 +1,3 @@
-from os import read
 from helper_functions import timer
 
 def read_file(path: str) -> list:

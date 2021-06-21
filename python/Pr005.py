@@ -1,41 +1,50 @@
-import time
-MAX = 20
+from helper_functions import timer, is_prime
+from math import log10, floor
 
-# This function returns True if x is a prime number
-def is_prime(x):
-	if (x == 2):
-		return True
-	if (x<2) or (x%2 == 0) :
-		return False
-	for i in range(3,int(x**(0.5))+1,2):
-		if (x%i == 0):
-			return False
-	return True
+@timer
+def prime_lcm_product(N: int) -> int:
+    """Table method prime factorization using Least Common Multiple.
+    
+    Notes
+    -----
+    Find the least common multiple is equivalent to find the smallest
+    divisible number by each of [1,<N>] numbers.
+    
+    Parameters
+    ----------
+    N : `int`
+		Upper limit of numbers.
+  
+	Returns
+	-------
+	product : `int`
+		Smallest divisible number.
+    """
+    # Create a table for available prime number up to <N> value
+    primes = [x for x in range(1,N+1) if is_prime(x)]
+    
+    # Initialize helper variables
+    product = 1
+    curr_idx = 0
+    check_flag = True
+    LIMIT = int(N**0.5)
+    
+    # Write each number as prime[idx] ^ alpha[idx]
+    while ( curr_idx < len(primes) ):
+        alpha = 1
+        if (check_flag):
+            if (primes[curr_idx] <= LIMIT):
+                # For a given prime, alpha value determinated this way.
+                alpha = floor( log10(N) / log10(primes[curr_idx]) )
+            else:
+                check_flag = False
+        product *= primes[curr_idx]**alpha
+        curr_idx += 1
 	
-# Solve this problem using Least Common Multiple by Table method prime factorization
-def prime_lcm():
-	# Find prime numbers that included in desired range
-	num = [x for x in range(1,MAX+1)]
-	primes = [x for x in range(1,MAX+1) if is_prime(x)]
-	ans = 1 ; pos = 0
-	while (pos < len(primes)):
-		index = []
-		# Starting from the 1st prime number, we will keep in index list
-		# the position of numbers that are evenly divided by them
-		for i in range(MAX):
-			if (num[i] % primes[pos] == 0):
-				index.append(i)
-		# While there are more than one elements that divided by <pos> prime number,
-		# we divide those numbers and multiply <pos> prime number to the result
-		if (len(index) >= 1):
-			for j in range(len(index)):
-				num[index[j]] = int(num[index[j]]/primes[pos])
-			ans *= primes[pos]
-		# if index list is empty, try with next prime number
-		else:
-			pos+=1
-	return ans
+    return product
 	
-start = time.time()
-print(prime_lcm())
-print("Time Evaluated : ", time.time()-start," seconds")
+if (__name__ == "__main__"):
+    N, ANS = 20, 232792560
+    ans = prime_lcm_product(N)
+    print(f"Problem 005 answer is {ans}")
+    assert(ans == ANS)
