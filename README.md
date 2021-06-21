@@ -1,9 +1,8 @@
 # ProjectEuler
-Solution of ProjectEuler problems
-https://projecteuler.net/
 
-Profile name : akraios ( Python implementation)
-
-Profile name : funkonymus ( C++ implementation)
+Solution of Project Euler problems.
 
 All codes must run under 1 minute rule
+
+
+[Project Euler]: https://projecteuler.net/
