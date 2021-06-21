@@ -22,10 +22,10 @@ def find_sum(N:int) -> int:
             sum += x
     return sum
 
-N1, ANS1 = 10, 23
-N2, ANS2 = 1000, 233168
-
 if (__name__ == '__main__'):
+    N1, ANS1 = 10, 23
+    N2, ANS2 = 1000, 233168
+    
     assert(find_sum(N1) == ANS1) # just for testing
     ans2 = find_sum(N2)
     assert(ans2 == ANS2)
