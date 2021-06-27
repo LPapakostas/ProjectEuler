@@ -71,3 +71,11 @@ def is_prime(x: int) -> bool:
         if (x%i == 0):
             return False
     return True
+
+def factorial(n: int) -> int:
+    """Returns the factorial of a given number.
+    """
+    if n < 2:
+        return 1
+    else:
+        return n*factorial(n-1)
