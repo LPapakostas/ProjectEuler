@@ -1,27 +1,62 @@
-import time
-N = 10**6
-# The first value of dictonary contains the number for Collage 
-# Series computation and the second one the steps of convergence
-collage_chain = {1:1}
-def fill_chain(n):
-# Use recursive algorithm by the following lemma:
-# 1) Collage(n) -> 1+Collage(n/2) , n is even
-# 2) Collage(n) -> 2+Collage((3n+1)/2) , n is odd
-	if n not in collage_chain:	
-		if ( n%2 == 0):
-			collage_chain[n] = 1 + fill_chain(int(n/2))
-		else:
-			collage_chain[n] = 2 + fill_chain(int( (3*n+1)/2 ) )
-	return collage_chain[n] 
+from helper_functions import timer
 
-start = time.time() 
-for i in range(N,1,-1):
-# Compute Collage Series for all numbers 
-	fill_chain(i)
-# Find the maximum steps of convergence
-longest_chain = max(collage_chain.values())
-# Reverse the <collage_chain> dictionary in order to find 
-# the number that contains the most steps
-inv_dict = { value:key for key,value in collage_chain.items()}
-print(inv_dict[longest_chain])
-print("Time Evaluated :", time.time()-start," seconds")
+def collatz_chain_len(N : int) -> int:
+    """Compute Collatz chain length for give number.
+    
+    Notes
+    -----
+    The Collatz sequence is defined for the set of positive integers:
+		* n --> n/2 (n is even)
+		* n --> 3n+1 (n is odd)
+	All starting integers finish at 1.
+    
+    Parameters
+    ----------
+    N : `int`
+		Number that Collatz chain length is computed.
+	
+	Returns
+	-------
+	Length of Collatz chain
+    """
+    # Check if Collatz chain length is already computed.
+    if ( N in collatz_chain_ ):
+        return collatz_chain_[N]
+    
+    if ( N == 1):
+        return 1
+    
+    is_even = (N%2 == 0)
+    if (is_even): 
+	    return 1 + collatz_chain_len(N//2)
+ 
+    return collatz_chain_len(3*N+1)
+
+@timer
+def find_max_collatz_chain_terms(N : int) -> int:
+    """Helper function that finds the number that
+    produces the longest chain in Collatz sequence.
+    """
+    global collatz_chain_ 
+    collatz_chain_ = {}
+    
+    # Fill Collatz chain terms 
+    for num in range(1,N):
+        collatz_chain_[num] = collatz_chain_len(num)
+    
+    # Reverse dictionary in order to find the number
+    # that produces the longest chain.    
+    longest_chain = max(collatz_chain_.values())
+    inv_dict = { value:key for key,value in collatz_chain_.items() }
+
+    value = inv_dict[longest_chain]
+    return value
+
+
+if (__name__ == "__main__"):
+    
+    N, ANS = 1000000, 837799
+    ans = find_max_collatz_chain_terms(N)
+    print(f"Problem 14 answer is {ans}")
+    assert(ans == ANS)
+    
