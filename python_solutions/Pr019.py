@@ -1,34 +1,69 @@
-def days_of_month(month,year):
-	days_31 = ['Jan','Mar','May','Jul','Aug','Oct','Dec']
-	days_30 = ['Apr','Jun','Sept','Nov']
-	if month in days_31:
-		return 31
-	elif month in days_30:
-		return 30
-	else:
-		if(year%400 == 0) and (year%4 == 0):
-			return(29)
-		else:
-			return(28)
+from helper_functions import timer
 
 
-days = ['Mon','Tue','Wed','Thur','Fri','Sat','Sun']
-months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec']
-year =[]
-start_year,stop_year = 1900,2000
-for i in range(start_year,stop_year+1):
-	year.append(i)
-days_passed =[]
-day_count = 0
-count_sundays = 0
+def days_of_month(month: str, year: int) -> int:
+    """
+    Returns the number of days of a month for 
+    specific year.
+    """
+    if (month in DAYS_31):
+        return 31
+    if (month in DAYS_30):
+        return 30
+    # If month == "February", need to check whether
+    # the specific year is leap
+    is_leap = (year % 400 == 0) and (year % 4 == 0)
+    if is_leap:
+        return 29
 
-for y in year:
-	for m in months:
-		for d in range(1,days_of_month(m,y)):
-			days_passed.append(days[day_count])
-			if (days_passed[-1] == 'Sun') and (d == 1) and (y != start_year):
-				count_sundays+=1
-			day_count+=1
-			if(day_count == len(days)):
-				day_count = 0
-print(count_sundays)
+    return 28
+
+
+@timer
+def count_sundays(start_year: int, end_year: int) -> int:
+    """
+    Counts how many Sundays fell on the first of the month 
+    during given start and end year.
+    """
+    # Initialize Helper variables
+    sundays = 0
+    week_days = 0
+    YEARS = [year for year in range(start_year, end_year + 1)]
+
+    for year in YEARS:
+        for month in MONTHS:
+            month_days = days_of_month(month, year)
+            for day in range(1, month_days+1):
+                # Obtain current day, in respect to week
+                current_day = DAYS[week_days]
+                # Check if it is the first Sunday of the month
+                # and update the counter
+                is_sunday = ((current_day == "Sunday") and (day == 1)
+                             and (year != START_YEAR))
+                if is_sunday:
+                    sundays += 1
+                week_days += 1
+                # Reset days of week counter
+                if (week_days == len(DAYS)):
+                    week_days = 0
+
+    return sundays
+
+
+if (__name__ == "__main__"):
+    # Define Global Helper identifiers
+    DAYS = ['Monday', 'Tuesday', 'Wednesday',
+            'Thursday', 'Friday', 'Saturday', 'Sunday']
+    MONTHS = ['January', 'February', 'March', 'April', 'May', 'June',
+              'July', 'August', 'September', 'October', 'November', 'December']
+    DAYS_31 = ['January', 'March', 'May',
+               'July', 'August', 'October', 'December']
+    DAYS_30 = ['April', 'June', 'September', 'November']
+
+    START_YEAR = 1900
+    END_YEAR = 2000
+    ANS = 172
+
+    ans = count_sundays(START_YEAR, END_YEAR)
+    assert(ANS == ans)
+    print(f"Problem 19 answer is {ans}")
