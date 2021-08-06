@@ -1,35 +1,92 @@
-import numpy as np
+from helper_functions import timer
 
-def product(x,y,dx,dy,n,a):
-  pr=1
-  for i in range(n):
-    pr*=a[x+i*dx,y+i*dy]
-  return pr
 
-a = np.loadtxt("Pr011_numbers.txt",dtype = int)
-n,p = a.shape
-ans = -1
-N = 4
-for i in range(n):
-  for j in range(p):
-    up,down,left,right = (-1 <i-3),(i+3 < n),(-1 < j-3),(j+3 < p)
-  
-    if up:
-      ans = max(product(i,j,-1,0,N,a),ans)
-    if down:
-      ans = max(product(i,j,1,0,N,a),ans)
-    if left:
-      ans = max(product(i,j,0,-1,N,a),ans)
-    if right:
-      ans = max(product(i,j,0,1,N,a),ans)
-    if (down and right):
-      ans = max(product(i,j,1,1,N,a),ans)
-    if (up and left):
-      ans = max(product(i,j,-1,-1,N,a),ans)
-    if (up and right):
-      ans = max(product(i,j,-1,1,N,a),ans)
-    if (down and left):
-      ans = max(product(i,j,1,-1,N,a),ans)
+def read_file(file_path: str) -> list:
+    """
+    Helper function that reads an array-like file
+    and returns it as a list of lists.
+    """
+    number_array = []
+    # Read the lines of file.
+    with open(file_path) as f:
+        lines = f.readlines()
 
-print(ans)
+    # For each line, save the number contents.
+    for l in lines:
+        num_lst = [int(x) for x in l.split()]
+        number_array.append(num_lst)
 
+    return number_array
+
+
+@timer
+def find_adjacent_product(N: int, data: list) -> int:
+    """
+    Finds the greatest product of N adjacent numbers
+    in the same direction (up, down, left, right, or diagonally)
+
+    Parameters
+    ----------
+    N : `int`
+      Number of adjacent elements
+    data : `list`
+      List of numbers
+
+    Returns
+    -------
+    Maximum adjacent product 
+    """
+    # Define array limits and initial product value
+    rows = len(data)
+    columns = len(data[0])
+    max_product = -1
+
+    for row in range(rows):
+        for col in range(columns):
+            # Define flags about possible directions for specific element
+            up_flag = (row-N > 0)
+            down_flag = (row+N < rows+1)
+            left_flag = (col-N > 0)
+            right_flag = (col+N < columns+1)
+
+            # Define possible routes (cross)
+            dx, dy = 0, 0
+            if up_flag:
+                dx, dy = -1, 0
+            if down_flag:
+                dx, dy = 1, 0
+            if left_flag:
+                dx, dy = 0, -1
+            if right_flag:
+                dx, dy = 0, 1
+
+            # Define possible routes (diagonal)
+            if (down_flag and right_flag):
+                dx, dy = 1, 1
+            if (up_flag and left_flag):
+                dx, dy = -1, -1
+            if (up_flag and right_flag):
+                dx, dy = -1, 1
+            if (down_flag and left_flag):
+                dx, dy = 1, -1
+
+            # Compute the adjacent product and compare it with maximum
+            product = 1
+            for i in range(N):
+                idx_x = row + i*dx
+                idx_y = col + i*dy
+                product *= data[idx_x][idx_y]
+
+            max_product = max(product, max_product)
+
+    return max_product
+
+
+if (__name__ == "__main__"):
+    FPATH = "Pr011_numbers.txt"
+    N, ANS = 4, 70600674
+
+    fData = read_file(FPATH)
+    ans = find_adjacent_product(N, fData)
+    print(f"Problem 11 answer is {ans}")
+    assert(ans == ANS)
