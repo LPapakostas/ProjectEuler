@@ -1,46 +1,43 @@
-'''
-We use Lehmer code to solve this problem
-http://math.shaunlgs.com/lehmer-code/
-'''
-
-def factorial(n):
-    if n < 2:
-        return 1
-    else:
-        return n*factorial(n-1)
-    
-def to_lehmer(x,factors):
-    num = []
-    for i in range(len(factors)):
-        num.append(int(x/factors[i]))
-        x -= int(x/factors[i])*factors[i]
-    return num
-
-def max_count(count,lst):
-    for i in range(len(lst)):
-        c = 0 ; x=lst[i]
-        for j in lst:
-            if x > j:
-                c+=1
-        if (c == count):
-            return x,i
-
-def lehmer_to_perm(a,digits):
-    perm = [int(x) for x in digits]
-    for i in range(len(perm)):
-        temp = perm[i:]
-        x,pos = max_count(a[i],temp)
-        perm[i] , perm[i+pos] = x , perm[i]
-    return perm
-
-digits = list("0123456789")
-N = 1000000
-factor =[]
-for i in range(int(max(digits))+1):
-    factor.append(factorial(i))
-factor = factor[::-1]
-lem_num = to_lehmer(N-1,factor) #list
-ans = lehmer_to_perm(lem_num,digits)
-print(''.join(str(x) for x in ans))
+from helper_functions import timer, factorial
 
 
+@timer
+def find_lexicographical_perm(order: int, n_digits: int) -> int:
+    """
+    For given order, find the lexicographical permutations.
+    """
+    # Create "factorial" system base
+    digits = [i for i in range(0, n_digits)]
+    factorial_base = []
+    for num in range(max(digits) + 1):
+        factorial_base.append(factorial(num))
+    factorial_base = factorial_base[::-1]
+
+    # Initialize values for computation
+    perm_digits = []
+    num_to_div = order-1  # use zero indexing
+
+    # Iterate through factorial base, divide given <order> number with
+    # each factor, obtain and remove the divider-index element
+    # until remainder is equal to zero. The produced digits
+    # are the N-th lexicographical permutation
+    for num in factorial_base:
+        rem = int(num_to_div/num)
+        num_to_div = num_to_div % num
+
+        # Remove <rem> occurancy and add <rem> position digit on result
+        perm_digits.append(str(digits[rem]))
+        digits.pop(rem)
+
+    res = int("".join(perm_digits))
+    return res
+
+
+if (__name__ == "__main__"):
+    N_DIGITS = 10
+    N, ANS = 1000000, 2783915460
+
+    # find lexicographical numbers
+    ans = find_lexicographical_perm(N, N_DIGITS)
+    assert(ANS == ans)
+    print(f"Problem 24 answer is {ans}")
