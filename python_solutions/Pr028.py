@@ -4,6 +4,9 @@ from helper_functions import timer
 @timer
 def compute_spiral_diagonal_sum(N: int) -> int:
     """
+    Consider NxN array that augments at a "spiral" manner,
+    starting from right at element <1>, and compute the 
+    summation of cross elements.
     """
     
     # NOTE: x = 1,..,size

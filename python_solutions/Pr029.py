@@ -1,9 +1,27 @@
-a_min,a_max = 2,100
-b_min,b_max = 2,100
-ans = []
-for a in range(a_min,a_max+1):
-    for b in range(b_min,b_max+1):
-        if a**b not in ans:
-            ans.append(a**b)
+from helper_functions import timer
+
+@timer
+def compute_distinct_terms(N: int) -> int:
+    """
+    Compute distinct terms of `a^b` values
+    for a,b in [2,N]. 
+    """
+    
+    combinations = []
+    
+    for a in range(2,N+1):
+        for b in range(2,N+1):
+            combinations.append(a**b)
+    
+    distinct_terms = len(set(combinations))
+    return distinct_terms 
             
-print(len(ans))
+            
+if (__name__ == "__main__"):
+    N1, ANS1 = 5, 15
+    N2, ANS2 = 100, 9183
+    assert(compute_distinct_terms(N1) == ANS1)
+    ans = compute_distinct_terms(N2)
+    assert(ans == ANS2)
+    print(f"Problem 29 answer is: {ans}")
+    
